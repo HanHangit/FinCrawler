@@ -25,7 +25,9 @@ public class Bow : Stuff {
 
     public override void Use()
     {
-        //TODO: Bogen Angriff
+        Vector2 SpawnPoint = GameObject.FindGameObjectWithTag("Player").GetComponent<Transform>().GetChild(0).transform.position;
+        GameObject Instanz = Instantiate(arrow, SpawnPoint, Quaternion.identity) as GameObject;
+        
         Debug.Log("Bogen wird benutzt");
     }
 
