@@ -2,7 +2,8 @@
 using System.Collections;
 using System;
 
-public class Bow : Stuff {
+public class Bow : Stuff
+{
     public float damage;
     public float attackSpeed;
     public new string name;
@@ -23,20 +24,25 @@ public class Bow : Stuff {
         return sprite;
     }
 
-    public override void Use()
+    public override void Use(float timer)
     {
-        Vector2 SpawnPoint = GameObject.FindGameObjectWithTag("Player").GetComponent<Transform>().GetChild(0).transform.position;
-        GameObject Instanz = Instantiate(arrow, SpawnPoint, Quaternion.identity) as GameObject;
-        
-        Debug.Log("Bogen wird benutzt");
+        if (timer >= attackSpeed)
+        {
+            GameObject Player = GameObject.FindGameObjectWithTag("Player");
+            Vector2 SpawnPoint = Player.GetComponent<Transform>().GetChild(0).transform.position;
+            GameObject Instanz = Instantiate(arrow, SpawnPoint, Quaternion.identity) as GameObject;
+            Instanz.GetComponent<ArrowMovingCollision>().SetDamage(damage);
+            Debug.Log("Bogen wird benutzt");
+            Player.GetComponent<PlayerQuickslot>().ResetTimer();
+        }
     }
 
     void OnTriggerStay2D(Collider2D other)
     {
-        if(other.CompareTag("Player"))
+        if (other.CompareTag("Player"))
         {
             //TODO: Panel öffnen
-            if(Input.GetKey(KeyCode.E))
+            if (Input.GetKey(KeyCode.E))
             {
                 other.GetComponent<PlayerQuickslot>().AddStuff(new Bow(damage, attackSpeed, name, arrow, sprite), 2);
                 Destroy(gameObject);

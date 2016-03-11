@@ -22,7 +22,7 @@ public class Sword : Stuff {
         return sprite;
     }
 
-    public override void Use()
+    public override void Use(float timer)
     {
         //TODO: Bogen Angriff
         Debug.Log("Schwert wird benutzt");

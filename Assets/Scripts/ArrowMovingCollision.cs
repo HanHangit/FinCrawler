@@ -30,9 +30,10 @@ public class ArrowMovingCollision : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D other)
     {
-        //if(other.CompareTag("Enemy"))
+        if(other.CompareTag("Enemy"))
         {
-            //TODO: Enemy-Damage
+            other.SendMessage("ApplyDamage", damage);
+            Destroy(gameObject);
         }
         if (!other.CompareTag("Player"))
         {
