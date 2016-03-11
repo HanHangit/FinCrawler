@@ -12,9 +12,8 @@ public class CollisionDamage : MonoBehaviour {
         if (other.CompareTag("Player"))
         {
             other.SendMessage("ApplyDamage", damage);
-
         }
-
+        Debug.Log("TriggerDamage");
     }
 
     void OnTriggerStay2D(Collider2D other)
@@ -23,5 +22,6 @@ public class CollisionDamage : MonoBehaviour {
         {
             other.SendMessage("ApplyDamage", damage);
         }
+        
     }
 }
