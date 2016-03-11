@@ -34,7 +34,7 @@ public class ChestController : MonoBehaviour {
             Vector2 SpawnPosition; //Die Position wird gesetzt, wo das Objekt gespawnt werden soll.
             do
             {
-                SpawnPosition = new Vector2(Random.Range(-1f,1f), Random.Range(-1f, 2f)); //Eine zufällige Position
+                SpawnPosition = new Vector2(Random.Range(-1f,1f), Random.Range(-1f, 1f)); //Eine zufällige Position
 
             }
             while (false); //TODO: Überprüfen, ob die SpawnPosition auch erreichbar ist durch den Spielern. Nicht in der Wand etc.
