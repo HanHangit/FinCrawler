@@ -7,10 +7,14 @@ public class EnemyViewController : MonoBehaviour {
     bool playerInViewRadius;
     Vector2 playerPosition;
     float distanceToPlayer;
+    bool wasAttacked;
+    EnemyHealthController healthControl;
 
 	// Use this for initialization
 	void Start () {
         playerInViewRadius = false;
+        wasAttacked = false;
+        healthControl = GetComponent<EnemyHealthController>();
 	}
 	
     public bool getPlayerInViewRadius()
@@ -20,16 +24,24 @@ public class EnemyViewController : MonoBehaviour {
 
 	// Update is called once per frame
 	void Update () {
-        playerPosition = GameObject.FindGameObjectWithTag("Player").transform.position;
-        distanceToPlayer = (playerPosition - new Vector2(transform.position.x, transform.position.y)).magnitude;
+        wasAttacked = healthControl.getWasAttacked();
 
-        if(distanceToPlayer > viewRadius)
+        if (wasAttacked)
         {
-            playerInViewRadius = false;
+            playerInViewRadius = true;
         }
         else
         {
-            playerInViewRadius = true;
+            playerPosition = GameObject.FindGameObjectWithTag("Player").transform.position;
+            distanceToPlayer = (playerPosition - new Vector2(transform.position.x, transform.position.y)).magnitude;
+            if (distanceToPlayer > viewRadius)
+            {
+                playerInViewRadius = false;
+            }
+            else
+            {
+                playerInViewRadius = true;
+            }
         }
     }
 
