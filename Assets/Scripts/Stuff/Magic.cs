@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class InventoyController : MonoBehaviour {
+public class Magic : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
