@@ -35,7 +35,7 @@ public class ArrowMovingCollision : MonoBehaviour
             other.SendMessage("ApplyDamage", damage);
             Destroy(gameObject);
         }
-        if (!other.CompareTag("Player"))
+        if (!other.CompareTag("Player") && !other.CompareTag("Munition"))
         {
             Destroy(gameObject);
         }

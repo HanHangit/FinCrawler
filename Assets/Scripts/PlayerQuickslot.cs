@@ -14,19 +14,19 @@ public class PlayerQuickslot : MonoBehaviour
     {
         timer += Time.deltaTime;
 
-        if (Input.GetKey(KeyCode.Keypad1))
+        if (Input.GetKeyDown(KeyCode.Keypad1))
         {
             actionButtons[0].Use(timer);
         }
-        if (Input.GetKey(KeyCode.Keypad2))
+        if (Input.GetKeyDown(KeyCode.Keypad2))
         {
             actionButtons[1].Use(timer);
         }
-        if (Input.GetKey(KeyCode.Keypad3))
+        if (Input.GetKeyDown(KeyCode.Keypad3))
         {
             actionButtons[2].Use(timer);
         }
-        if (Input.GetKey(KeyCode.Keypad4))
+        if (Input.GetKeyDown(KeyCode.Keypad4))
         {
             actionButtons[3].Use(timer);
         }
