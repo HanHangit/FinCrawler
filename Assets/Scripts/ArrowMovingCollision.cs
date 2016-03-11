@@ -8,8 +8,10 @@ public class ArrowMovingCollision : MonoBehaviour {
     Rigidbody2D r2bd;
 	// Use this for initialization
 	void Start () {
+        Vector2 direction = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>().MoveDirectionPlayer();
         r2bd = GetComponent<Rigidbody2D>();
-        r2bd.AddForce(Vector2.up * speed);	    
+        r2bd.AddForce(direction.normalized * speed);	
+            
 	}
 
     public void SetDamage(float Set)
