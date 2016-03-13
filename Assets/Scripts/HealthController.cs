@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 using System.Collections;
+using UnityEngine.UI;
 
 public class HealthController : MonoBehaviour {
 
@@ -10,6 +11,7 @@ public class HealthController : MonoBehaviour {
 
     float health; //Leben des Spielers
     int lifePoints;//############### Maximal LEBEN des Spielers hier festlegen!
+    private float maxHealth = 50; //############### Maximal HP des Spielers hier festlegen!
     Vector2 startPostion;
 
     bool isDead = false;
@@ -19,6 +21,9 @@ public class HealthController : MonoBehaviour {
     Animator anim;
     PlayerController playerController;
 
+    //--GuiElemente
+    public Image healtGUI;
+    public Text lifePointsText;
 
 
 
@@ -40,7 +45,8 @@ public class HealthController : MonoBehaviour {
             lifePoints = PlayerPrefs.GetInt("LifePoints");
 
         }
-	}
+        UpdateView();
+    }
 	
     void ApplyDamage(float damage)
     {
@@ -69,6 +75,7 @@ public class HealthController : MonoBehaviour {
     void ResetIsDamageable()
     {
         isDamageable = true;
+        UpdateView();
     }
 
     void Dying()
@@ -124,6 +131,9 @@ public class HealthController : MonoBehaviour {
 
     void UpdateView()
     {//--GUI 
+        healtGUI.fillAmount = health / maxHealth;
+        lifePointsText.text = lifePoints.ToString();
         
     }
+  
 }
