@@ -10,6 +10,8 @@ public class Bow : Stuff
     public GameObject arrow;
     public Sprite sprite;
 
+    bool openpanel = false;
+
     public Bow(float damage, float attackSpeed, string name, GameObject arrow, Sprite sprite)
     {
         this.damage = damage;
@@ -42,11 +44,29 @@ public class Bow : Stuff
         if (other.CompareTag("Player"))
         {
             //TODO: Panel öffnen
+            openpanel = true;
             if (Input.GetKey(KeyCode.E))
             {
                 other.GetComponent<PlayerQuickslot>().AddStuff(new Bow(damage, attackSpeed, name, arrow, sprite), 2);
                 Destroy(gameObject);
             }
+        }
+    }
+
+    void OnTriggerExit2D(Collider2D other)
+    {
+        openpanel = false;
+    }
+
+    void OnGUI()
+    {
+        if(openpanel)
+        {
+            Vector2 position = GameObject.FindGameObjectWithTag("Player").transform.position;
+            position += new Vector2(Screen.width / 2, Screen.height / 2 - 100);
+            Vector2 size = new Vector2(200, 50);
+            GUI.Box(new Rect(position, size), "Name: " + name + "\nSchaden: " + damage + "\nAttackSpeed: " + attackSpeed);
+            
         }
     }
 }
