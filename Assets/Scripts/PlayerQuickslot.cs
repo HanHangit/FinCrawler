@@ -14,10 +14,11 @@ public class PlayerQuickslot : MonoBehaviour
         
         timer = 0;
         actionButtons = new Stuff[4];
-        for(int i = 0; i < actionButtons.Length; ++i)
-        {
-            actionButtons[i] = new Empty();
-        }
+       for(int i = 0; i < actionButtons.Length; ++i)
+       {
+           actionButtons[i] = new Empty();
+          
+       }
     }
     void Update()
     {
@@ -57,7 +58,7 @@ public class PlayerQuickslot : MonoBehaviour
         
         
         //Vector2 position = new Vector2(100, Screen.height - 50);
-        Vector2 size = new Vector2(50, 50);
+        //Vector2 size = new Vector2(50, 50);
         for(int i = 0; i < actionButtons.Length; ++i)
         {
             //GUI.DrawTexture(new Rect(position, size), actionButtons[i].GetSprite().texture);
@@ -65,7 +66,7 @@ public class PlayerQuickslot : MonoBehaviour
             //
             //ca = actionButtons[i].GetSprite().texture;
             image[i].sprite = actionButtons[i].GetSprite();
-
+            
 
         }
     }
