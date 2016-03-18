@@ -20,10 +20,7 @@ public class PlayerController : MonoBehaviour
     private bool isdead = false;
 
     //--Waffe
-    public GameObject WaffePrefab;
     private bool isAttacking = false;
-    public Transform spawnPointFernkampfWaffe;
-    public float arrowSpeed;
     Vector2 direction;
     Vector2 movement_vector;
 
