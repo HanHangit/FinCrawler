@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityEngine.UI;
 
 public class PlayerQuickslot : MonoBehaviour
 {
@@ -9,6 +10,10 @@ public class PlayerQuickslot : MonoBehaviour
     {
         timer = 0;
         actionButtons = new Stuff[4];
+        for(int i = 0; i < actionButtons.Length; ++i)
+        {
+            actionButtons[i] = new Empty();
+        }
     }
     void Update()
     {
@@ -42,4 +47,17 @@ public class PlayerQuickslot : MonoBehaviour
         timer = 0;
     }
 
+    void OnGUI()
+    {
+        Vector2 position = new Vector2(100, Screen.height - 50);
+        Vector2 size = new Vector2(50, 50);
+        for(int i = 0; i < actionButtons.Length; ++i)
+        {
+                GUI.DrawTexture(new Rect(position, size), actionButtons[i].GetSprite().texture);
+                //GUI.Box(new Rect(position, size), " Kein \nBild");
+
+
+            position.x += 50;
+        }
+    }
 }
