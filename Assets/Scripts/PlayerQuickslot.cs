@@ -4,10 +4,14 @@ using UnityEngine.UI;
 
 public class PlayerQuickslot : MonoBehaviour
 {
+    public Image[] image;
+
     Stuff[] actionButtons;
     float timer;
     void Start()
     {
+
+        
         timer = 0;
         actionButtons = new Stuff[4];
         for(int i = 0; i < actionButtons.Length; ++i)
@@ -49,15 +53,20 @@ public class PlayerQuickslot : MonoBehaviour
 
     void OnGUI()
     {
-        Vector2 position = new Vector2(100, Screen.height - 50);
+        
+        
+        
+        //Vector2 position = new Vector2(100, Screen.height - 50);
         Vector2 size = new Vector2(50, 50);
         for(int i = 0; i < actionButtons.Length; ++i)
         {
-                GUI.DrawTexture(new Rect(position, size), actionButtons[i].GetSprite().texture);
-                //GUI.Box(new Rect(position, size), " Kein \nBild");
+            //GUI.DrawTexture(new Rect(position, size), actionButtons[i].GetSprite().texture);
+            //GUI.Box(new Rect(position, size), " Kein \nBild");
+            //
+            //ca = actionButtons[i].GetSprite().texture;
+            image[i].sprite = actionButtons[i].GetSprite();
 
 
-            position.x += 50;
         }
     }
 }
