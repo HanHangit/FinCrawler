@@ -11,9 +11,11 @@ public class Sword : Stuff
     public float range;
     public new string name;
     public Sprite sprite;
+    bool openpanel;
 
     public Sword(float damage, float attackSpeed, float range, string name, Sprite sprite)
     {
+        openpanel = false;
         this.range = range;
         this.damage = damage;
         this.attackSpeed = attackSpeed;
@@ -85,16 +87,33 @@ public class Sword : Stuff
         }
     }
 
+    void OnGUI()
+    {
+        if (openpanel)
+        {
+            Vector2 position = GameObject.FindGameObjectWithTag("Player").transform.position;
+            position += new Vector2(Screen.width / 2, Screen.height / 2 - 100);
+            Vector2 size = new Vector2(200, 50);
+            GUI.Box(new Rect(position, size), "Name: " + name + "\nSchaden: " + damage + "\nAttackSpeed: " + attackSpeed);
+
+        }
+    }
+
     void OnTriggerStay2D(Collider2D other)
     {
         if (other.CompareTag("Player"))
         {
-            //TODO: Panel öffnen
+            openpanel = true;
             if (Input.GetKey(KeyCode.E))
             {
                 other.GetComponent<PlayerQuickslot>().AddStuff(new Sword(damage, attackSpeed, range, name, sprite), 1);
                 Destroy(gameObject);
             }
         }
+    }
+
+    void OnTriggerExit2D(Collider2D other)
+    {
+        openpanel = false;
     }
 }
