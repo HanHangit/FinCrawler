@@ -7,17 +7,20 @@ public class ChestController : MonoBehaviour {
 
     float Range; //Der Radius des Kreises, auf dem die Objekte aus der Truhe spawnen
     bool Looted; //Überprüft, ob die Kiste schon geöffnet wurde.
+    PeterBar barhandler;
+
 	// Use this for initialization
 	void Start () {
-        Range = 2;
+        Range = 1;
         Looted = false;
+        barhandler = GameObject.FindGameObjectWithTag("Player").GetComponent<PeterBar>();
 	}
 
     void OnTriggerStay2D(Collider2D other)
     {
         if(other.CompareTag("Player")) 
         {
-            if(true && !Looted) //TODO: Überprüfen ob Spieler den notewendigen Schlüssel besitzt
+            if(barhandler.CheckKey(Key) && !Looted)
             {
                 SpawnContent();
                 Looted = true; //Die Truhe wurde gelooted.
