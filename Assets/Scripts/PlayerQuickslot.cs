@@ -6,11 +6,12 @@ public class PlayerQuickslot : MonoBehaviour
 {
     public Image[] image;
 
+    Animator anim;
     Stuff[] actionButtons;
     float timer;
     void Start()
     {
-
+        anim = GameObject.FindGameObjectWithTag("WeaponAnimator").GetComponent<Animator>();
         
         timer = 0;
         actionButtons = new Stuff[4];
@@ -23,9 +24,10 @@ public class PlayerQuickslot : MonoBehaviour
     void Update()
     {
         timer += Time.deltaTime;
-
+        anim.SetBool("IsAttacking", false);
         if (Input.GetKeyDown(KeyCode.Keypad1))
         {
+            anim.SetBool("IsAttacking", true);
             actionButtons[0].Use(timer);
         }
         if (Input.GetKeyDown(KeyCode.Keypad2))
