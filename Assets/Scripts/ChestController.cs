@@ -15,12 +15,11 @@ public class ChestController : MonoBehaviour {
 	void Start () {
         Range = 1;
         Looted = false;
-<<<<<<< HEAD
+
         anim = GetComponent<Animator>();
         anim.SetBool("isopen", false);
-=======
+
         barhandler = GameObject.FindGameObjectWithTag("Player").GetComponent<PeterBar>();
->>>>>>> b8bd3a4be6999ed679df946f75e743535e594edb
 	}
 
     void OnTriggerStay2D(Collider2D other)
