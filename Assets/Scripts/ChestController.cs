@@ -10,7 +10,6 @@ public class ChestController : MonoBehaviour {
     float Range; //Der Radius des Kreises, auf dem die Objekte aus der Truhe spawnen
     bool Looted; //Überprüft, ob die Kiste schon geöffnet wurde.
     PeterBar barhandler;
-    Animator anim;
 
 	// Use this for initialization
 	void Start () {
@@ -18,10 +17,9 @@ public class ChestController : MonoBehaviour {
         Looted = false;
 
         anim = GetComponent<Animator>();
-        anim.SetBool("isopen", false);
+        anim.SetBool("Open", false);
 
         barhandler = GameObject.FindGameObjectWithTag("Player").GetComponent<PeterBar>();
-        anim = GetComponent<Animator>();
 	}
 
     void OnTriggerStay2D(Collider2D other)
@@ -32,7 +30,6 @@ public class ChestController : MonoBehaviour {
             {
                 Invoke("SpawnContent",1);
                 Looted = true; //Die Truhe wurde gelooted.
-                anim.SetBool("isopen", true);
                 //TODO: Bild ändern auf Truhe geöffnet.
                 anim.SetBool("Open", true);
             }
