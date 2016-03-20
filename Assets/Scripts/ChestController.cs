@@ -3,8 +3,10 @@ using System.Collections;
 
 public class ChestController : MonoBehaviour {
     public GameObject[] Content; // Der Inhalt der Truhe.
+
     public string Key; // Der Key, welcher für die Truhe benötigt wird. (RedKey, GreenKey, YellowKey, ...)
 
+    Animator anim;
     float Range; //Der Radius des Kreises, auf dem die Objekte aus der Truhe spawnen
     bool Looted; //Überprüft, ob die Kiste schon geöffnet wurde.
     PeterBar barhandler;
@@ -14,6 +16,10 @@ public class ChestController : MonoBehaviour {
 	void Start () {
         Range = 1;
         Looted = false;
+
+        anim = GetComponent<Animator>();
+        anim.SetBool("isopen", false);
+
         barhandler = GameObject.FindGameObjectWithTag("Player").GetComponent<PeterBar>();
         anim = GetComponent<Animator>();
 	}
@@ -26,6 +32,7 @@ public class ChestController : MonoBehaviour {
             {
                 Invoke("SpawnContent",1);
                 Looted = true; //Die Truhe wurde gelooted.
+                anim.SetBool("isopen", true);
                 //TODO: Bild ändern auf Truhe geöffnet.
                 anim.SetBool("Open", true);
             }
