@@ -3,14 +3,18 @@ using System.Collections;
 
 public class ChestController : MonoBehaviour {
     public GameObject[] Content; // Der Inhalt der Truhe.
+
     public string Key; // Der Key, welcher für die Truhe benötigt wird. (RedKey, GreenKey, YellowKey, ...)
 
+    Animator anim;
     float Range; //Der Radius des Kreises, auf dem die Objekte aus der Truhe spawnen
     bool Looted; //Überprüft, ob die Kiste schon geöffnet wurde.
 	// Use this for initialization
 	void Start () {
         Range = 2;
         Looted = false;
+        anim = GetComponent<Animator>();
+        anim.SetBool("isopen", false);
 	}
 
     void OnTriggerStay2D(Collider2D other)
@@ -21,6 +25,7 @@ public class ChestController : MonoBehaviour {
             {
                 SpawnContent();
                 Looted = true; //Die Truhe wurde gelooted.
+                anim.SetBool("isopen", true);
                 //TODO: Bild ändern auf Truhe geöffnet.
             }
         }
