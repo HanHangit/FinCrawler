@@ -1,17 +1,21 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System;
+using System.Collections.Generic;
 
-public class Sword : Stuff {
+public class Sword : Stuff
+{
 
     public float damage;
     public float attackSpeed;
     public float range;
     public new string name;
     public Sprite sprite;
+    bool openpanel;
 
-    public Sword(float damage, float attackSpeed,float range, string name, Sprite sprite)
+    public Sword(float damage, float attackSpeed, float range, string name, Sprite sprite)
     {
+        openpanel = false;
         this.range = range;
         this.damage = damage;
         this.attackSpeed = attackSpeed;
@@ -30,38 +34,68 @@ public class Sword : Stuff {
         {
             GameObject Player = GameObject.FindGameObjectWithTag("Player"); //Reference zum Player
             Vector2 position = Player.transform.position;
-
+            Vector2 playersize = new Vector2(Player.GetComponent<SpriteRenderer>().bounds.size.x / 2, Player.GetComponent<SpriteRenderer>().bounds.size.y / 2);
             Player.GetComponent<PlayerQuickslot>().ResetTimer(); //Timer wird zurückgesetzt.
 
-            int size = 0;
-            int help = 0;
-            GameObject[] Enemy; //Array welche die Gegner speichert
-            EnemyHealthController[] EnemyHealth; //Array welche die Enemy Health Controller speichert
-            Enemy = GameObject.FindGameObjectsWithTag("Enemy"); //Alle Enemy werden gesucht und gespeichert
-            foreach (GameObject t in Enemy) //Für jedes Enemy
+
+            Collider2D[] Enemy; //Array welche die Gegner speichert
+            List<EnemyHealthController> EnemyHealth =  new List<EnemyHealthController>(); //Array welche die Enemy Health Controller speichert
+            Vector2 pointa;
+            Vector2 pointb;
+            Vector2 lookdirection = Player.GetComponent<PlayerController>().LookingDirection();
+
+            if (lookdirection.Equals(Vector2.up))
             {
-                Vector2 EnemyPosition = t.transform.position;  //Position des Gegner wird gespeichert
-                if ((EnemyPosition - position).magnitude <= range) //Bei jedem Gegner der in Reichweite ist, wird size um eins erhöht
-                {
-                    ++size;
-                    
-                }
+                pointa = new Vector2(position.x - playersize.x, position.y + playersize.y);
+                pointb = pointa + new Vector2(playersize.x * 2, range);
             }
-            EnemyHealth = new EnemyHealthController[size]; //Ein Array mit der größe der Anzahl der Gegner die in Reichweite sind, wird erstellt
-            for (int i = 0; i < Enemy.Length; ++i)
+            else if (lookdirection.Equals(Vector2.right))
             {
-                Vector2 EnemyPosition = Enemy[i].transform.position;
-                if ((EnemyPosition - position).magnitude <= range)
-                {
-                    EnemyHealth[help] = Enemy[i].GetComponent<EnemyHealthController>();
-                    help++;
-                }
+                pointa = new Vector2(position.x + playersize.x, position.y + playersize.y);
+                pointb = pointa + new Vector2(range, -playersize.y * 2);
+            }
+            else if (lookdirection.Equals(Vector2.down))
+            {
+                pointa = new Vector2(position.x + playersize.x, position.y - playersize.y);
+                pointb = pointa + new Vector2(-playersize.x * 2, -range);
+            }
+            else if (lookdirection.Equals(Vector2.left))
+            {
+                pointa = new Vector2(position.x - playersize.x, position.y - playersize.y);
+                pointb = pointa + new Vector2(-range, playersize.y * 2);
+            }
+            else
+            {
+                pointa = Vector2.zero;
+                pointb = Vector2.zero;
+            }
+            Debug.DrawLine(pointa,pointb,Color.red,3);
+
+            Enemy = Physics2D.OverlapAreaAll(pointa, pointb);
+            foreach(Collider2D c in Enemy)
+            {
+                if (c.CompareTag("Enemy"))
+                    EnemyHealth.Add(c.GetComponent<EnemyHealthController>());
             }
             foreach (EnemyHealthController t in EnemyHealth)
             {
                 t.SendMessage("ApplyDamage", damage);
             }
             Debug.Log("Schwert wird benutzt");
+
+
+        }
+    }
+
+    void OnGUI()
+    {
+        if (openpanel)
+        {
+            Vector2 position = GameObject.FindGameObjectWithTag("Player").transform.position;
+            position += new Vector2(Screen.width / 2, Screen.height / 2 - 100);
+            Vector2 size = new Vector2(200, 50);
+            GUI.Box(new Rect(position, size), "Name: " + name + "\nSchaden: " + damage + "\nAttackSpeed: " + attackSpeed);
+
         }
     }
 
@@ -69,12 +103,17 @@ public class Sword : Stuff {
     {
         if (other.CompareTag("Player"))
         {
-            //TODO: Panel öffnen
+            openpanel = true;
             if (Input.GetKey(KeyCode.E))
             {
-                other.GetComponent<PlayerQuickslot>().AddStuff(new Sword(damage, attackSpeed,range, name, sprite), 1);
+                other.GetComponent<PlayerQuickslot>().AddStuff(new Sword(damage, attackSpeed, range, name, sprite), 1);
                 Destroy(gameObject);
             }
         }
+    }
+
+    void OnTriggerExit2D(Collider2D other)
+    {
+        openpanel = false;
     }
 }
