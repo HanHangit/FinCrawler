@@ -13,6 +13,7 @@ public class Grid : MonoBehaviour {
 	Node[,] grid;
 	float nodeDiameter;
 	int gridSizeX, gridSizeY;
+	public List<Node> path;
 
 	void Start()
 	{
@@ -84,7 +85,8 @@ public class Grid : MonoBehaviour {
 		return grid[x, y];
 	}
 
-	public List<Node> path;
+
+		
 	void OnDrawGizmos()
 	{
 		Gizmos.DrawWireCube(transform.position, new Vector3(gridWorldSize.x, gridWorldSize.y, 1));

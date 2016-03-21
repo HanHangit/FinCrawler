@@ -16,11 +16,10 @@ public class Pathfinding : MonoBehaviour
 
 	void Update ()
 	{
-		if(Input.GetButtonDown("Jump"))
-		{
-			FindPath (seeker.position, target.position);
-		}
+		
 	}
+
+	 
 
 	void FindPath(Vector3 startPos, Vector3 targetPos)
 	{
@@ -84,6 +83,18 @@ public class Pathfinding : MonoBehaviour
 		Path.Reverse ();
 
 		grid.path = Path;
+	}
+
+	public List<Vector3> findVectorPath(Vector3 startVector, Vector3 endVector)
+	{
+		FindPath (startVector, endVector);
+		RetracePath(grid.NodeFromWorldPoint(startVector), grid.NodeFromWorldPoint(endVector));
+		List<Vector3> vectorPath = new List<Vector3>();
+		foreach (Node n in grid.path)
+		{
+			vectorPath.Add (n.worldPosition);
+		}
+		return vectorPath;
 	}
 
 
