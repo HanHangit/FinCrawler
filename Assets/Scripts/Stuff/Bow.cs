@@ -9,13 +9,15 @@ public class Bow : Stuff
     public new string name;
     public GameObject arrow;
     public Sprite sprite;
+    public int quickslotposition;
 
     bool openpanel = false;
 
-    public Bow(float damage, float attackSpeed, string name, GameObject arrow, Sprite sprite)
+    public Bow(float damage, float attackSpeed, int quickslotposition, string name, GameObject arrow, Sprite sprite)
     {
         this.damage = damage;
         this.attackSpeed = attackSpeed;
+        this.quickslotposition = quickslotposition;
         this.name = name;
         this.arrow = arrow;
         this.sprite = sprite;
@@ -47,7 +49,7 @@ public class Bow : Stuff
             openpanel = true;
             if (Input.GetKey(KeyCode.E))
             {
-                other.GetComponent<PlayerQuickslot>().AddStuff(new Bow(damage, attackSpeed, name, arrow, sprite), 2);
+                other.GetComponent<PlayerQuickslot>().AddStuff(CreateStuff());
                 Destroy(gameObject);
             }
         }
@@ -60,13 +62,28 @@ public class Bow : Stuff
 
     void OnGUI()
     {
-        if(openpanel)
+        if (openpanel)
         {
             Vector2 position = GameObject.FindGameObjectWithTag("Player").transform.position;
             position += new Vector2(Screen.width / 2, Screen.height / 2 - 100);
             Vector2 size = new Vector2(200, 50);
-            GUI.Box(new Rect(position, size), "Name: " + name + "\nSchaden: " + damage + "\nAttackSpeed: " + attackSpeed);
-            
+            GUI.Box(new Rect(position, size), ToString());
+
         }
+    }
+
+    public override string ToString()
+    {
+        return "Name: " + name + "\nSchaden: " + damage + "\nAttackSpeed: " + attackSpeed;
+    }
+
+    public override Stuff CreateStuff()
+    {
+        return new Bow(damage, attackSpeed, quickslotposition, name, arrow, sprite);
+    }
+
+    public override int GetQuickslotPosition()
+    {
+        return quickslotposition;
     }
 }

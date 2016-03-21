@@ -44,9 +44,11 @@ public class PlayerQuickslot : MonoBehaviour
         }
     }
 
-    public void AddStuff(Stuff ToAdd, int number)
+    public void AddStuff(Stuff ToAdd)
     {
-        actionButtons[--number] = ToAdd;
+        int index = ToAdd.GetQuickslotPosition() - 1;
+        Debug.Log(index + " " + ToAdd.ToString());
+        actionButtons[index] = ToAdd;
     }
 
     public void ResetTimer()

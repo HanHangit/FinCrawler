@@ -11,10 +11,12 @@ public class Sword : Stuff
     public float range;
     public new string name;
     public Sprite sprite;
+    public int quickslotposition;
     bool openpanel;
 
-    public Sword(float damage, float attackSpeed, float range, string name, Sprite sprite)
+    public Sword(float damage, float attackSpeed, float range,int quickslotposition, string name, Sprite sprite)
     {
+        this.quickslotposition = quickslotposition;
         openpanel = false;
         this.range = range;
         this.damage = damage;
@@ -94,7 +96,7 @@ public class Sword : Stuff
             Vector2 position = GameObject.FindGameObjectWithTag("Player").transform.position;
             position += new Vector2(Screen.width / 2, Screen.height / 2 - 100);
             Vector2 size = new Vector2(200, 50);
-            GUI.Box(new Rect(position, size), "Name: " + name + "\nSchaden: " + damage + "\nAttackSpeed: " + attackSpeed);
+            GUI.Box(new Rect(position, size), ToString());
 
         }
     }
@@ -106,7 +108,7 @@ public class Sword : Stuff
             openpanel = true;
             if (Input.GetKey(KeyCode.E))
             {
-                other.GetComponent<PlayerQuickslot>().AddStuff(new Sword(damage, attackSpeed, range, name, sprite), 1);
+                other.GetComponent<PlayerQuickslot>().AddStuff(CreateStuff());
                 Destroy(gameObject);
             }
         }
@@ -115,5 +117,20 @@ public class Sword : Stuff
     void OnTriggerExit2D(Collider2D other)
     {
         openpanel = false;
+    }
+
+    public override string ToString()
+    {
+        return "Name: " + name + "\nSchaden: " + damage + "\nAttackSpeed: " + attackSpeed;
+    }
+
+    public override Stuff CreateStuff()
+    {
+        return new Sword(damage, attackSpeed, range,quickslotposition, name, sprite);
+    }
+
+    public override int GetQuickslotPosition()
+    {
+        return quickslotposition;
     }
 }
