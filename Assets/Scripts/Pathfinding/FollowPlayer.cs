@@ -19,12 +19,22 @@ public class FollowPlayer : MonoBehaviour {
 	void FixedUpdate () 
 	{
 		rb2d.velocity = Vector2.zero;
-		_grid.onlyDisplayPathGizmos = false;
-		if(Input.GetButtonDown("Jump"))
+		_grid.onlyDisplayPathGizmos = true;
+		if(Input.GetButton("Jump"))			
 		{
 			List<Vector3> vectorPath = _Pathfinding.findVectorPath (transform.position, target.position);
-			Debug.Log("Vector(" + vectorPath[1].x + "|" + vectorPath[1].y + "|" + vectorPath[1].z + ")");
-			rb2d.velocity = vectorPath [1].normalized * 1;
+			/*
+			foreach (Vector3 vector in vectorPath)
+			{
+				Debug.Log("Vector(" + vector.x + "|" + vector.y + "|" + vector.z + ")");
+			}
+			*/
+			/*
+			Debug.Log("Vector(" + vectorPath[0].x + "|" + vectorPath[0].y + "|" + vectorPath[0].z + ")");
+			Debug.Log("Rigidbody(" + rb2d.position.x + "|" + rb2d.position.y + ")");
+			Debug.Log("Transform(" + transform.position.x + "|" + transform.position.y + "|" + transform.position.z + ")");
+			*/
+			rb2d.velocity = ( vectorPath[0] - transform.position).normalized;
 		}
 
 	}
