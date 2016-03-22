@@ -1,15 +1,23 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEngine.UI;
 
 public class PeterBar : MonoBehaviour
 {
+    public Text reference;
+
     List<Key> listkey;
     public int money;
     // Use this for initialization
     void Start()
     {
         listkey = new List<Key>();
+    }
+
+    void Update()
+    {
+        reference.text = "Geld: " + money;
     }
 
     public void AddMoney(int value)
@@ -26,7 +34,7 @@ public class PeterBar : MonoBehaviour
     }
     public bool CheckKey(string keyname)
     {
-        foreach(Key k in listkey)
+        foreach (Key k in listkey)
         {
             if (k.keyname.Equals(keyname))
                 return true;
