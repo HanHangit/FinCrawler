@@ -12,6 +12,10 @@ public class PlayerController : MonoBehaviour
     private Vector2 lastMove;
     private bool playerMoving;
 
+    //OverHeadHealth
+    bool onCD;
+    public int CouldownForDamage;
+
     enum LookinDirection { Up,Right,Down,Left};
 
     LookinDirection lookdirection;
@@ -39,6 +43,18 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        //--TeST!
+
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            CombatTextManager.Instance.CreateText(transform.position, "Hello", Color.white, false);
+        }
+
+        if (Input.GetKeyDown(KeyCode.V))
+        {
+            CombatTextManager.Instance.CreateText(transform.position, "KRIT", Color.white, true);
+        }
+
         //Vector2 movement_vector = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
         Vector2 position = transform.position;
         Vector2 vectorsize = new Vector2(1, 1);
@@ -79,23 +95,6 @@ public class PlayerController : MonoBehaviour
         else if (movement_vector.y == -1)
             lookdirection = LookinDirection.Down;
 
-        // if (Input.GetAxisRaw("Horizontal") == Input.GetAxisRaw("Vertical") )
-        // {
-        //
-        //     direction.x = 1;
-        // }
-        // if (Input.GetAxisRaw("Horizontal") == -1)
-        // {
-        //     direction.x = -1;
-        // }
-        // if (Input.GetAxisRaw("Vertical") == 1)
-        // {
-        //     direction.y = 1;
-        // }
-        // if (Input.GetAxisRaw("Vertical") == -1)
-        // {
-        //     direction.y = -1;
-        // }
 
 
 
@@ -128,5 +127,57 @@ public class PlayerController : MonoBehaviour
         if (lookdirection.Equals(LookinDirection.Left))
             return Vector2.left;
         return Vector2.zero;
+    }
+    void OnTriggerStay2D(Collider2D other)
+    {
+        if (other.name == "Spikes")
+        {
+            if (!onCD)
+            {
+                StartCoroutine(CoolDownDamage());
+                int random = Random.Range(0, 2);
+
+                if (random == 0)
+                {
+                    int rndDamage = Random.Range(3, 10);
+                    CombatTextManager.Instance.CreateText(transform.position, "-" + rndDamage.ToString(), Color.red, false);
+                }
+                else
+                {
+                    int rndDamage = Random.Range(10, 16);
+                    CombatTextManager.Instance.CreateText(transform.position, "-" + rndDamage.ToString(), Color.red, true);
+                    Debug.Log("KRIT");
+                }
+            }
+
+
+        }
+        else if (other.name == "Heart")
+        {
+            if (!onCD)
+            {
+                StartCoroutine(CoolDownDamage());
+                int random = Random.Range(0, 2);
+
+                if (random == 0)
+                {
+                    int rndDamage = Random.Range(3, 10);
+                    CombatTextManager.Instance.CreateText(transform.position, "+" + rndDamage.ToString(), Color.blue, false);
+                }
+                else
+                {
+                    int rndDamage = Random.Range(10, 16);
+                    CombatTextManager.Instance.CreateText(transform.position, "+" + rndDamage.ToString(), Color.blue, true);
+                    Debug.Log("KRIT");
+                }
+            }
+
+        }
+    }
+    IEnumerator CoolDownDamage()
+    {
+        onCD = true;
+        yield return new WaitForSeconds(CouldownForDamage);
+        onCD = false;
     }
 }
