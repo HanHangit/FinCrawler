@@ -32,4 +32,9 @@ public class EnemyHealthController : MonoBehaviour {
     {
         return wasAttacked;
     }
+
+    void OnGUI()
+    {
+       
+    }
 }
