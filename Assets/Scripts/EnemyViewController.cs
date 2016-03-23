@@ -4,7 +4,7 @@ using System.Collections;
 public class EnemyViewController : MonoBehaviour {
 
     public float viewRadius;
-    bool playerInViewRadius;
+	bool followsPlayer;
     Vector2 playerPosition;
     float distanceToPlayer;
     bool wasAttacked;
@@ -12,14 +12,14 @@ public class EnemyViewController : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-        playerInViewRadius = false;
+        followsPlayer = false;
         wasAttacked = false;
         healthControl = GetComponent<EnemyHealthController>();
 	}
 	
-    public bool getPlayerInViewRadius()
+    public bool FollowsPlayer()
     {
-        return playerInViewRadius;
+        return followsPlayer;
     }
 
 	// Update is called once per frame
@@ -28,7 +28,7 @@ public class EnemyViewController : MonoBehaviour {
 
         if (wasAttacked)
         {
-            playerInViewRadius = true;
+            followsPlayer = true;
         }
         else
         {
@@ -36,11 +36,11 @@ public class EnemyViewController : MonoBehaviour {
             distanceToPlayer = (playerPosition - new Vector2(transform.position.x, transform.position.y)).magnitude;
             if (distanceToPlayer > viewRadius)
             {
-                playerInViewRadius = false;
+                followsPlayer = false;
             }
             else
             {
-                playerInViewRadius = true;
+                followsPlayer = true;
             }
         }
     }
