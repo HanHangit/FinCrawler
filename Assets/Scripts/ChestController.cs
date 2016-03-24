@@ -73,6 +73,8 @@ public class ChestController : MonoBehaviour
             for (int i = 0; i < content.Length; ++i)
             {
                 position.y = recposition.y + size.y * i;
+                //Vector2 texturesize = content[i].GetSprite().bounds.size;
+                //GUI.Box(new Rect(position, texturesize), content[i].GetSprite().texture);
                 GUI.Box(new Rect(position, size), content[i].ToString());
                 if (Input.GetKeyDown(keyCodes[i]))
                 {

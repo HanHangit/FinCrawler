@@ -1,8 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
-using System;
 
-public class Bow : Stuff
+public class Fireball : Stuff
 {
     public float damage;
     public float attackSpeed;
@@ -13,7 +12,7 @@ public class Bow : Stuff
 
     bool openpanel = false;
 
-    public Bow(float damage, float attackSpeed, int quickslotposition, string name, GameObject arrow, Sprite sprite)
+    public Fireball(float damage, float attackSpeed, int quickslotposition, string name, GameObject arrow, Sprite sprite)
     {
         this.damage = damage;
         this.attackSpeed = attackSpeed;
@@ -79,7 +78,7 @@ public class Bow : Stuff
 
     public override Stuff CreateStuff()
     {
-        return new Fireball(damage, attackSpeed, quickslotposition, name, arrow, sprite);
+        return new Bow(damage, attackSpeed, quickslotposition, name, arrow, sprite);
     }
 
     public override int GetQuickslotPosition()

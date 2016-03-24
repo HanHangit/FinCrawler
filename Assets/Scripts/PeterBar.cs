@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class PeterBar : MonoBehaviour
 {
-    public Text reference;
+    public Text moneytext;
 
     List<Key> listkey;
     public int money;
@@ -17,7 +17,7 @@ public class PeterBar : MonoBehaviour
 
     void Update()
     {
-        reference.text = "Geld: " + money;
+        moneytext.text = "Geld: " + money;
     }
 
     public void AddMoney(int value)
