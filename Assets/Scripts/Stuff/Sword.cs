@@ -13,6 +13,9 @@ public class Sword : Stuff
     public Sprite sprite;
     public int quickslotposition;
     bool openpanel;
+    
+
+  
 
     public Sword(float damage, float attackSpeed, float range,int quickslotposition, string name, Sprite sprite)
     {
@@ -32,6 +35,7 @@ public class Sword : Stuff
 
     public override void Use(float timer)
     {
+     
         if (timer >= attackSpeed)
         {
             GameObject Player = GameObject.FindGameObjectWithTag("Player"); //Reference zum Player
@@ -81,7 +85,10 @@ public class Sword : Stuff
             }
             foreach (EnemyHealthController t in EnemyHealth)
             {
+             
                 t.SendMessage("ApplyDamage", damage);
+
+                
             }
             Debug.Log("Schwert wird benutzt");
 

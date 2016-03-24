@@ -33,6 +33,7 @@ public class ArrowMovingCollision : MonoBehaviour
         if(other.CompareTag("Enemy"))
         {
             other.SendMessage("ApplyDamage", damage);
+
             Destroy(gameObject);
         }
         if (!other.CompareTag("Player") && !other.CompareTag("Munition"))

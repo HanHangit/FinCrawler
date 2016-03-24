@@ -130,48 +130,40 @@ public class PlayerController : MonoBehaviour
     }
     void OnTriggerStay2D(Collider2D other)
     {
-        if (other.name == "Spikes")
+        if (other.CompareTag("Enemy"))
         {
+            float damage = other.GetComponent<CollisionDamage>().GetDamage();
             if (!onCD)
             {
                 StartCoroutine(CoolDownDamage());
-                int random = Random.Range(0, 2);
-
-                if (random == 0)
-                {
-                    int rndDamage = Random.Range(3, 10);
-                    CombatTextManager.Instance.CreateText(transform.position, "-" + rndDamage.ToString(), Color.red, false);
-                }
-                else
-                {
-                    int rndDamage = Random.Range(10, 16);
-                    CombatTextManager.Instance.CreateText(transform.position, "-" + rndDamage.ToString(), Color.red, true);
-                    Debug.Log("KRIT");
-                }
+               //int random = Random.Range(0, 2);
+               //
+               //if (random == 0)
+               //{
+                    //int rndDamage = Random.Range(3, 10);
+                    CombatTextManager.Instance.CreateText(transform.position, "-" + damage.ToString(), Color.red, false);
+                //}
+                //else
+                //{
+                //    int rndDamage = Random.Range(10, 16);
+                //    CombatTextManager.Instance.CreateText(transform.position, "-" + rndDamage.ToString(), Color.red, true);
+                //    Debug.Log("KRIT");
+                //}
             }
-
-
         }
-        else if (other.name == "Heart")
+        if (other.name == ("Lebenstrank"))
         {
-            if (!onCD)
-            {
-                StartCoroutine(CoolDownDamage());
-                int random = Random.Range(0, 2);
-
-                if (random == 0)
-                {
-                    int rndDamage = Random.Range(3, 10);
-                    CombatTextManager.Instance.CreateText(transform.position, "+" + rndDamage.ToString(), Color.blue, false);
-                }
-                else
-                {
-                    int rndDamage = Random.Range(10, 16);
-                    CombatTextManager.Instance.CreateText(transform.position, "+" + rndDamage.ToString(), Color.blue, true);
-                    Debug.Log("KRIT");
-                }
-            }
-
+            float lifePoints = other.GetComponent<LebenstrankCollision>().GetLifePoints();
+            CombatTextManager.Instance.CreateText(transform.position, "+" + lifePoints.ToString(), Color.green, false);
+        }
+       
+    }
+    void OnTriggerEnter2D(Collider2D other)
+    {
+        if (other.name == ("Lebenstrank"))
+        {
+            float lifePoints = other.GetComponent<LebenstrankCollision>().GetLifePoints();
+            CombatTextManager.Instance.CreateText(transform.position, "+" + lifePoints.ToString(), Color.green, false);
         }
     }
     IEnumerator CoolDownDamage()

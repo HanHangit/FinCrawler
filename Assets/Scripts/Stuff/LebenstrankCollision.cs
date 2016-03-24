@@ -13,4 +13,8 @@ public class LebenstrankCollision : MonoBehaviour {
             Destroy(gameObject);
         }
     }
+    public float GetLifePoints()
+    {
+        return leben;
+    }
 }

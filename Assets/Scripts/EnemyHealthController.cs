@@ -15,6 +15,9 @@ public class EnemyHealthController : MonoBehaviour {
 
 	void ApplyDamage(float damage)
     {
+        CombatTextManager.Instance.CreateText(transform.position, "-" + damage.ToString(), Color.magenta, false);
+
+
         wasAttacked = true;
         health -= damage;
         if(health <= 0)

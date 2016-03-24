@@ -24,4 +24,8 @@ public class CollisionDamage : MonoBehaviour {
         }
         
     }
+    public float GetDamage()
+    {
+        return damage;
+    }
 }
